@@ -14,7 +14,7 @@ private:
 	int _currentState;
 	using States = void(DPDA::*)(const char signal);
 	
-	constexpr static int Q = 3;
+	constexpr static int Q = 6;
 	constexpr static int ALPHABET = 2;
 	constexpr static int ALPHABET_STACK = 2;
 
@@ -24,11 +24,15 @@ private:
 	void toState1(const char signal);
 	void toState2(const char signal);
 	void toState3(const char signal);
+	void toState4(const char signal);
+	void toState5(const char signal);
 
 	void toUndefinedState(const char signal);
 
 	static int interpreter(const char preSignal);
 	DPDA();
+
+	void printErrorInString(const unsigned int errorNumber);
 public:
 	static DPDA* getInstance();
 	bool conformityCheck(const std::string &inputString);
