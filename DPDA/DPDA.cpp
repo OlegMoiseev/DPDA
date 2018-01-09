@@ -59,7 +59,6 @@ DPDA::DPDA()
 	             }
 	            )
 {
-	_stack.push(0);
 }
 
 void DPDA::printErrorInString(const unsigned int errorNumber)
@@ -68,17 +67,12 @@ void DPDA::printErrorInString(const unsigned int errorNumber)
 	{
 		std::cout << _input[j];
 	}
-	std::cout << std::endl;
+	std::cout << '\n';
 	for (size_t j = 0; j < errorNumber; ++j)
 	{
 		std::cout << ' ';
 	}
-	std::cout << '^' << std::endl;
-}
-
-DPDA* DPDA::getInstance()
-{
-	return new DPDA();
+	std::cout << '^' << '\n';
 }
 
 void DPDA::toState0(const char signal)
@@ -135,6 +129,8 @@ int DPDA::interpreter(const char preSignal)
 
 bool DPDA::conformityCheck(const std::string& inputString)
 {
+	_currentState = 0;
+	_stack.push(0);  // 0 ~ z0
 	_input = inputString;
 	size_t count;
 	for (count = 0; count < _input.size(); ++count)
@@ -147,17 +143,17 @@ bool DPDA::conformityCheck(const std::string& inputString)
 		}
 		else
 		{
-			std::cout << "Unresolved external symbol " << _input[count] << ':' << std::endl;
+			std::cout << "Unresolved external symbol " << _input[count] << ':' << '\n';
 			printErrorInString(count);
-
+			std::stack<unsigned char>().swap(_stack);
 			return false;
 		}
 
 		if (_currentState == -1)
 		{
-			std::cout << "Error in the typed character string:" << std::endl;
+			std::cout << "Error in the typed character string:\n";
 			printErrorInString(count);
-
+			std::stack<unsigned char>().swap(_stack);
 			return false;
 		}
 	}
@@ -185,7 +181,8 @@ bool DPDA::conformityCheck(const std::string& inputString)
 		return true;
 	}
 
-	std::cout << "Error in the typed character string:" << std::endl;
+	std::cout << "Error in the typed character string:\n";
 	printErrorInString(count);
+	std::stack<unsigned char>().swap(_stack);
 	return false;
 }

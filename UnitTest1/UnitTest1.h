@@ -12,7 +12,7 @@ namespace unitTestsDPDA
 	TEST_CLASS(CheckDPDA)
 	{
 	private:
-		DPDA* _automata = DPDA::getInstance();
+		DPDA _automata;
 	public:
 		TEST_METHOD(test0);
 		TEST_METHOD(test1);

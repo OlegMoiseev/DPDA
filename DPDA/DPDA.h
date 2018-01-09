@@ -30,11 +30,10 @@ private:
 	void toUndefinedState(const char signal);
 
 	static int interpreter(const char preSignal);
-	DPDA();
 
 	void printErrorInString(const unsigned int errorNumber);
 public:
-	static DPDA* getInstance();
+	DPDA();
 	bool conformityCheck(const std::string &inputString);
 };
 #endif // DPDA_H
